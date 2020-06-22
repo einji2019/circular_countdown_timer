@@ -61,8 +61,15 @@ class _CircularCountDownTimerState extends State<CircularCountDownTimer>
 
   String get timerString {
     Duration duration = controller.duration * controller.value;
-    String time =
-        '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    String time;
+
+    if (duration.inSeconds > 3599) {
+      time =
+          '${duration.inHours}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    } else {
+      time =
+          '${duration.inMinutes % 60}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    }
 
     if (widget.reverseOrder == null || !widget.reverseOrder) {
       // For Forward Order
